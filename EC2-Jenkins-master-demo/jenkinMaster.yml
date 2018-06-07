@@ -1,0 +1,13 @@
+#cloud-config
+repo_update: true
+repo_upgrade: all
+
+users:
+  - name: jenkins
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCLdprZXI3Grdxej6Wwx6ob88A7VvjcqpkdNHDDr+tG3pGHLMphQFZA+3pNKRfOG/odXcH7E721/Gm+w4rbZge4FoViJkk8258yS0GQfUMR1sXysJorWIoz6TIxBqFqLzqexX2Aj8b84tOSnNEdpOH4/EIWGeaGyANAuUsQQA5yuSwH9SmFFlDeowHfKUgeIFpnv2pMSgcxrj3XVJnq/m2mVxSwu+Jsu/ju21TMM5b7aXHv1bd9svpE0sJiq0yV8AkxEJKmsfls5bgNJ5FbHxL+TjaCeH6WcqhMLcksXH1Qn9HAueJFcFUy1Ntj49XIM7euDhz/6iBfcHWAIXYvJLDn
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    shell: /bin/bash
+runcmd:
+  - sed -i -e '$aAllowUsers jenkins' /etc/ssh/sshd_config
+  - restart ssh
