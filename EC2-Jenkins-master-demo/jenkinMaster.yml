@@ -8,6 +8,30 @@ users:
       - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCLdprZXI3Grdxej6Wwx6ob88A7VvjcqpkdNHDDr+tG3pGHLMphQFZA+3pNKRfOG/odXcH7E721/Gm+w4rbZge4FoViJkk8258yS0GQfUMR1sXysJorWIoz6TIxBqFqLzqexX2Aj8b84tOSnNEdpOH4/EIWGeaGyANAuUsQQA5yuSwH9SmFFlDeowHfKUgeIFpnv2pMSgcxrj3XVJnq/m2mVxSwu+Jsu/ju21TMM5b7aXHv1bd9svpE0sJiq0yV8AkxEJKmsfls5bgNJ5FbHxL+TjaCeH6WcqhMLcksXH1Qn9HAueJFcFUy1Ntj49XIM7euDhz/6iBfcHWAIXYvJLDn
     sudo: ['ALL=(ALL) NOPASSWD:ALL']
     shell: /bin/bash
+
+yum_repos:
+    # The name of the repository
+    Jenkins:
+        # Any repository configuration options
+        # See: man yum.conf
+        #
+        # This one is required!
+        baseurl: https://pkg.jenkins.io/redhat/jenkins.repo
+        enabled: false
+        failovermethod: priority
+        gpgcheck: true
+        gpgkey: https://pkg.jenkins.io/redhat/jenkins.io.key
+        name: Jenkins package
+
+runcmd:
+  - [wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/8u141-b15/336fa29ff2bb4ef291e347e091f7f4a7/jdk-8u171-linux-x64.rpm"]
+
+packages:
+  - jenkins
+  - [jdk-8u141-linux-x64.rpm]
+ 
+
 runcmd:
   - sed -i -e '$aAllowUsers jenkins' /etc/ssh/sshd_config
   - restart ssh
+  - start jenkins
