@@ -32,6 +32,6 @@ packages:
  
 
 runcmd:
-  - sed -i -e '$aAllowUsers jenkins' /etc/ssh/sshd_config
-  - restart ssh
+#  - sed -i -e '$aAllowUsers jenkins' /etc/ssh/sshd_config
+#  - restart ssh
   - start jenkins
