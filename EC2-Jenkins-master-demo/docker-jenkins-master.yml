@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#remove old docker
+apt-get remove docker docker-engine docker.io
+
+#Ubuntu linux xenial install docker-jenkins
+#Install docker-ce
+apt-get update -y
+apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+apt-key fingerprint 0EBFCD88
+
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+apt-get update -y
+
+apt-get install docker-ce
+
+apt-get install docker-ce=18.03.0~ce-0~ubuntu
+
+#Install docker-jenkns
+mkdir -p /var/jenkins_home
+chown -R 1000:1000 /ver/jenkins_home/
+docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -d --name jenkins jenkins
+
+#show endpoint
+echo 'Jenkins Installed'
+#echo 'You should now be able to access jenkins at: http://`$(curl -s ifconfig.co)`:8080'
