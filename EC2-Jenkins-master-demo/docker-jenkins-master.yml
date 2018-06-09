@@ -24,7 +24,7 @@ apt-get update -y
 
 apt-get install docker-ce
 
-apt-get install docker-ce=18.03.0~ce-0~ubuntu
+usermod -aG docker ubuntu
 
 #Install docker-jenkns
 mkdir -p /var/jenkins_home
